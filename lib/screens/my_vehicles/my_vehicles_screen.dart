@@ -12,11 +12,13 @@ import 'package:test_futurecode/core/config/storage/app_storage.dart';
 import 'package:test_futurecode/core/utils/app_string.dart';
 import 'package:test_futurecode/core/utils/assets_manager.dart';
 import 'package:test_futurecode/core/utils/color_manager.dart';
+import 'package:test_futurecode/screens/add_vehicle/add_vehicle_screen.dart';
 
 import '../../data/datasource/remote/remote_data_source.dart';
 import '../../data/models/models.dart';
 import '../../domain/repositories/repository.dart';
 import '../../domain/services/api_services_imp.dart';
+import '../vehicle_details/vehicle_details_screen.dart';
 import 'controller/my_vehicles_controller.dart';
 
 class MyVehiclesScreen extends StatelessWidget {
@@ -52,19 +54,24 @@ class MyVehiclesScreen extends StatelessWidget {
                             padding: EdgeInsets.all(40.sp),
                             itemBuilder: (_, index) {
                               Vehicle vehicle= myVehiclesController.vehicles.value.listVehicle[index];
-                              return VehicleItem(
+                              return
+
+                                VehicleItem(
+                                index: index,
                                 image: vehicle.idImage,
                                 name:vehicle.model,
                                 priceKilo: '50 ل.س 1كم/',
                                 priceCompany: '50 ل.س1كم/',
-                              );},
+                              );
+
+                              },
                             itemCount: myVehiclesController.vehicles.value.listVehicle.length,)
                       );}
                   }),
                   Padding(
                     padding: EdgeInsets.all(12.sp),
                     child: AppButton(text: AppString.myVehiclesAddVehicle, onPressed: () {
-
+                      Get.to(()=>const AddVehicleScreen());
                     }),
                   )
                 ],
@@ -78,71 +85,83 @@ class MyVehiclesScreen extends StatelessWidget {
 }
 
 class VehicleItem extends StatelessWidget {
-  const VehicleItem(
+   VehicleItem(
       {super.key,
+      required this.index,
       required this.name,
       required this.image,
       required this.priceKilo,
       required this.priceCompany});
 
+  final int index;
   final String name;
   final String image;
   final String priceKilo;
   final String priceCompany;
-
+  MyVehiclesController myVehiclesController = Get.find<MyVehiclesController>();
   _getStyleColor(){
     return TextStyle(
-      color: false? ColorManager.primaryColor : ColorManager.secondaryColor,
+      color: myVehiclesController.clickIndex.value==index? ColorManager.primaryColor : ColorManager.secondaryColor,
         fontWeight: FontWeight.w500,
         fontSize: 13.sp
     );
   }
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.all(16.sp),
-      decoration: BoxDecoration(
-        //Todo Add on select Index
-        border: false?Border.all(
-          color: ColorManager.primaryColor,
-          width: 5
-        ):null,
-        color: ColorManager.white,
-        borderRadius: BorderRadius.circular(30.sp),
-        boxShadow: [
-          BoxShadow(
-              color: ColorManager.black.withOpacity(.12), blurRadius: 13.sp)
-        ],
-      ),
-      child: Column(
-        children: [
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 20.sp),
-            child: Row(
-              children: [
-                Expanded(
-                    child: ListTile(
-                  title: Text(name,style:_getStyleColor()),
-                )),
-                CircleAvatar(
-                  backgroundColor: ColorManager.nextIntroButton,
-                  radius: 40.sp,
-                  child: SvgPicture.network(AssetsManager.dialogIMG),
-                ),
-              ],
-            ),
-          ),
-          ListTile(
 
-            title: Text('سعر الكيلو:',style:_getStyleColor()),
-            trailing: Text(priceKilo,style:_getStyleColor()),
-          ),
-          ListTile(
-            title: Text('نسبة ربح الشركة:',style:_getStyleColor()),
-            trailing: Text(priceCompany,style:_getStyleColor()),
-          ),
-        ],
-      ),
-    );
+    return
+
+      InkWell(
+        onTap: (){
+          myVehiclesController.clickIndex.value=index;
+          myVehiclesController.vehicle.value=myVehiclesController.vehicles.value.listVehicle[index];
+          Get.to(()=>const VehicleDetailsScreen());
+        },
+        child: Container(
+        padding: EdgeInsets.all(16.sp),
+        decoration: BoxDecoration(
+          //Todo Add on select Index
+          border:  myVehiclesController.clickIndex.value==index?Border.all(
+            color: ColorManager.primaryColor,
+            width: 5
+          ):null,
+          color: ColorManager.white,
+          borderRadius: BorderRadius.circular(30.sp),
+          boxShadow: [
+            BoxShadow(
+                color: ColorManager.black.withOpacity(.12), blurRadius: 13.sp)
+          ],
+        ),
+        child: Column(
+          children: [
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 20.sp),
+              child: Row(
+                children: [
+                  Expanded(
+                      child: ListTile(
+                    title: Text(name,style:_getStyleColor()),
+                  )),
+                  CircleAvatar(
+                    backgroundColor: ColorManager.nextIntroButton,
+                    radius: 40.sp,
+                    child: SvgPicture.asset(AssetsManager.dialogIMG),
+                  ),
+                ],
+              ),
+            ),
+            ListTile(
+
+              title: Text(AppString.priceKilo,style:_getStyleColor()),
+              trailing: Text(priceKilo,style:_getStyleColor()),
+            ),
+            ListTile(
+              title: Text(AppString.priceCompany,style:_getStyleColor()),
+              trailing: Text(priceCompany,style:_getStyleColor()),
+            ),
+          ],
+        ),
+    ),
+      );
   }
 }

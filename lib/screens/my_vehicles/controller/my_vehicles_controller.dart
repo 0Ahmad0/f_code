@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:test_futurecode/core/common/helper_widgets/dialog.dart';
@@ -11,12 +13,18 @@ class MyVehiclesController extends GetxController {
   MyVehiclesController(this._repository);
   final Repository _repository;
   var vehicles = Vehicles(listVehicle: []).obs;
+  var vehicle = Vehicle.init().obs;
   var isLoading = false.obs;
+  var clickIndex= (-1).obs;
   ///Method
 
-
+  @override
+  void dispose() {
+    super.dispose();
+  }
   Future<void> getMyVehicles() async {
     isLoading.value=true;
+
     final response = await _repository.getMyVehicles();
 
     response.when(

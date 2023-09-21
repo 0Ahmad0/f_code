@@ -17,14 +17,16 @@ Advance read(BinaryReader reader) {
   final fields = <int, dynamic>{
     for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
   };
-  return Advance()..token = fields[0] as String?;
+  return Advance(userId:fields[0] as int?)..token = fields[1] as String?;
 }
 
 @override
 void write(BinaryWriter writer, Advance obj) {
   writer
-    ..writeByte(1)
+    ..writeByte(2)
     ..writeByte(0)
+    ..write(obj.userId)
+    ..writeByte(1)
     ..write(obj.token);
 }
 
@@ -89,8 +91,10 @@ class UserAdapter extends TypeAdapter<User> {
 ///advance
 @HiveType(typeId: 0)
 class Advance extends HiveObject {
-  Advance({String? token});
+  Advance({int? userId,String? token});
   @HiveField(0)
+  int? userId;
+  @HiveField(1)
   String? token;
 }
 
@@ -168,6 +172,9 @@ class Vehicle {
 
   Map<String, dynamic> toJson() => _$VehicleToJson(this);
 
+  factory Vehicle.init(){
+    return Vehicle(vehicleTypeId: 0, userId: 0, model: '', color: '', boardNumber: 0, vehicleImage: '', mechanicImage: '', boardImage: '', idImage: '', delegateImage: '');
+  }
   Vehicle({
     this.id,
     required this.vehicleTypeId,
@@ -183,6 +190,7 @@ class Vehicle {
     this.vehicleType,
 
   });
+
 }
 
 

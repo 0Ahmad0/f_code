@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:dio/dio.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
@@ -13,6 +14,10 @@ import '../../core/common/helper_widgets/app_back_button.dart';
 import '../../core/common/helper_widgets/app_button.dart';
 import '../../core/utils/app_string.dart';
 import '../../core/utils/color_manager.dart';
+import '../../data/datasource/remote/remote_data_source.dart';
+import '../../domain/repositories/repository.dart';
+import '../../domain/services/api_services_imp.dart';
+import 'controller/add_vehicle_controller.dart';
 
 class AddVehicleScreen extends StatefulWidget {
   const AddVehicleScreen({super.key});
@@ -22,20 +27,20 @@ class AddVehicleScreen extends StatefulWidget {
 }
 
 class _AddVehicleScreenState extends State<AddVehicleScreen> {
-  final modelController = TextEditingController();
-  final numberController = TextEditingController();
+
   final _formKey = GlobalKey<FormState>();
-  List<File> files = [];
+  AddVehicleController addVehicleController= Get.put(AddVehicleController(Repository(RemoteDataSource(ApiServicesImp( Dio())))));
+
   @override
   void dispose() {
-    modelController.dispose();
-    numberController.dispose();
-
+    addVehicleController.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
+    AddVehicleController addVehicleController= Get.put(AddVehicleController(Repository(RemoteDataSource(ApiServicesImp( Dio())))));
+    addVehicleController.getVehicleTypes();
     return Scaffold(
       appBar: AppBar(
         leading: AppBackButton(),
@@ -44,7 +49,15 @@ class _AddVehicleScreenState extends State<AddVehicleScreen> {
           style: TextStyle(color: ColorManager.secondaryColor),
         ),
       ),
-      body: Form(
+      body:
+
+      Obx(() {
+      if (addVehicleController.isLoading.value) {
+        return  Center(child: CircularProgressIndicator()); // عرض حلقة التحميل
+      }
+      else {
+        return
+      Form(
         key: _formKey,
         child: Column(
           children: [
@@ -62,12 +75,12 @@ class _AddVehicleScreenState extends State<AddVehicleScreen> {
                     Icons.keyboard_arrow_down_sharp,
                     color: ColorManager.secondaryColor,
                   ),
-                  items: [1, 2, 3, 4, 5, 6]
+                  items: addVehicleController.vehicleTypes.value.listVehicleType
                       .map(
                         (e) => DropdownMenuItem(
-                          value: e.toString(),
+                          value: e.id,
                           child: Text(
-                            e.toString(),
+                            e.name.toString(),
                           ),
                         ),
                       )
@@ -79,13 +92,15 @@ class _AddVehicleScreenState extends State<AddVehicleScreen> {
                         padding: EdgeInsets.all(12.sp),
                         child: SvgPicture.asset(AssetsManager.typeCarIcon),
                       )),
-                  onChanged: (value) {},
+                  onChanged: (value) {
+                    addVehicleController.vehicleTypeId=value;
+                  },
                 ),
                 SizedBox(
                   height: 20.sp,
                 ),
                 AppTextFiled(
-                  controller: modelController,
+                  controller: addVehicleController.modelController,
                   icon: AssetsManager.modelCarIcon,
                   hintText: AppString.modelVehicle,
                 ),
@@ -102,7 +117,7 @@ class _AddVehicleScreenState extends State<AddVehicleScreen> {
                     Icons.keyboard_arrow_down_sharp,
                     color: ColorManager.secondaryColor,
                   ),
-                  items: [1, 2, 3, 4, 5, 6]
+                  items: addVehicleController.colors
                       .map((e) =>
                           DropdownMenuItem(value: e, child: Text(e.toString())))
                       .toList(),
@@ -114,13 +129,15 @@ class _AddVehicleScreenState extends State<AddVehicleScreen> {
                         child:
                             SvgPicture.asset(AssetsManager.colorPaletteCarIcon),
                       )),
-                  onChanged: (value) {},
+                  onChanged: (value) {
+                    addVehicleController.colorSelect=value;
+                  },
                 ),
                 SizedBox(
                   height: 20.sp,
                 ),
                 AppTextFiled(
-                  controller: numberController,
+                  controller: addVehicleController.numberController,
                   icon: AssetsManager.plateNumberCarIcon,
                   hintText: AppString.numberVehicle,
                 ),
@@ -164,7 +181,7 @@ class _AddVehicleScreenState extends State<AddVehicleScreen> {
                                   .pickFiles(allowMultiple: true);
 
                               if (result != null) {
-                                files = result.paths
+                                addVehicleController.files = result.paths
                                     .map((path) => File(path!))
                                     .toList();
                                 setStateFiles(() {});
@@ -237,7 +254,7 @@ class _AddVehicleScreenState extends State<AddVehicleScreen> {
                                 ],
                               ),
                               separatorBuilder: (_,__)=>SizedBox(width: 10.sp,),
-                              itemCount: files.length,))
+                              itemCount: addVehicleController.files.length,))
                         ],
                       );
                     }
@@ -255,7 +272,7 @@ class _AddVehicleScreenState extends State<AddVehicleScreen> {
             )
           ],
         ),
-      ),
+      );}}),
     );
   }
 }

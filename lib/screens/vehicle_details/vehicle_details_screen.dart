@@ -7,12 +7,14 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:test_futurecode/core/common/helper_widgets/app_textfiled.dart';
+import 'package:test_futurecode/core/common/helper_widgets/dialog.dart';
 import 'package:test_futurecode/core/utils/assets_manager.dart';
 
 import '../../core/common/helper_widgets/app_back_button.dart';
 import '../../core/common/helper_widgets/app_button.dart';
 import '../../core/utils/app_string.dart';
 import '../../core/utils/color_manager.dart';
+import '../my_vehicles/controller/my_vehicles_controller.dart';
 
 class VehicleDetailsScreen extends StatefulWidget {
   const VehicleDetailsScreen({super.key});
@@ -22,6 +24,7 @@ class VehicleDetailsScreen extends StatefulWidget {
 }
 
 class _VehicleDetailsScreenState extends State<VehicleDetailsScreen> {
+  MyVehiclesController myVehiclesController = Get.find<MyVehiclesController>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -41,7 +44,7 @@ class _VehicleDetailsScreenState extends State<VehicleDetailsScreen> {
               DetailsCarItem(
                 icon: AssetsManager.typeCarIcon,
                 title: AppString.typeVehicle,
-                value: 'سيارة',
+                value: myVehiclesController.vehicle.value.vehicleType?.name??'',//'سيارة',
               ),
               Divider(
                 color: ColorManager.ligthGrey,
@@ -49,7 +52,7 @@ class _VehicleDetailsScreenState extends State<VehicleDetailsScreen> {
               DetailsCarItem(
                 icon: AssetsManager.modelCarIcon,
                 title: AppString.modelVehicle,
-                value: 'كيا ريو',
+                value:myVehiclesController.vehicle.value.model// 'كيا ريو',
               ),
               Divider(
                 color: ColorManager.ligthGrey,
@@ -57,7 +60,7 @@ class _VehicleDetailsScreenState extends State<VehicleDetailsScreen> {
               DetailsCarItem(
                 icon: AssetsManager.colorPaletteCarIcon,
                 title: AppString.colorVehicle,
-                value: 'أسود',
+                value: myVehiclesController.vehicle.value.color//'أسود',
               ),
               Divider(
                 color: ColorManager.ligthGrey,
@@ -65,7 +68,7 @@ class _VehicleDetailsScreenState extends State<VehicleDetailsScreen> {
               DetailsCarItem(
                 icon: AssetsManager.plateNumberCarIcon,
                 title: AppString.numberVehicle,
-                value: '125478',
+                value:'${myVehiclesController.vehicle.value.boardNumber}'// '125478',
               ),
               Divider(
                 color: ColorManager.ligthGrey,
@@ -137,7 +140,12 @@ class _VehicleDetailsScreenState extends State<VehicleDetailsScreen> {
           )),
           Padding(
             padding: EdgeInsets.all(12.sp),
-            child: AppButton(text: AppString.pickerVehicle, onPressed: () {}),
+            child: AppButton(text: AppString.pickerVehicle, onPressed: () async {
+
+               AppDialogs.showLoadingDialog(onPressed: (){  Get.back();});
+
+
+            }),
           )
         ],
       ),
