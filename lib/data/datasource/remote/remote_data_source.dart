@@ -25,6 +25,9 @@ class RemoteDataSource {
           "password": password,
         },
         hasToken: false);
+    if(response['data']!=null)response['data']=response['data']['user'];
+
+    User.fromJson(response['data']);
 
     return BaseModel.fromJson(
       response,
@@ -45,11 +48,14 @@ class RemoteDataSource {
 
     final response = await _apiServices.post(AppUrl.register,
         formData: formData, hasToken: false);
-
-    return BaseModel.fromJson(
-      response,
-      (json) => User.fromJson(json),
-    );
+    if(response['data']!=null) {
+      response['data']['user']['token'] = response['data']['token'];
+      response['data'] = response['data']['user'];
+    }
+      return BaseModel.fromJson(
+        response,
+            (json) => User.fromJson(json),
+      );
   }
 
   ///Vehicle
@@ -77,7 +83,6 @@ class RemoteDataSource {
   Future<BaseModel> getMyVehicles() async {
     final response =
     await _apiServices.get(AppUrl.vehicle, hasToken: true);
-
     return BaseModel.fromJson(
       response,
           (json) => Vehicles.fromJson(json),

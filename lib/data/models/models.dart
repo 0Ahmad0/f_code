@@ -3,6 +3,57 @@ import 'package:json_annotation/json_annotation.dart';
 part 'models.g.dart';
 
 
+
+// **************************************************************************
+// TypeAdapterGenerator
+// **************************************************************************
+
+class UserAdapter extends TypeAdapter<User> {
+  @override
+  final int typeId = 0;
+
+  @override
+  User read(BinaryReader reader) {
+    final numOfFields = reader.readByte();
+    final fields = <int, dynamic>{
+      for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
+    };
+    return User(
+      phoneNumber: fields[2] as String,
+      image: fields[3] as String,
+      id: fields[0] as int,
+      fullName: fields[1] as String,
+    )..token = fields[4] as String?;
+  }
+
+  @override
+  void write(BinaryWriter writer, User obj) {
+    writer
+      ..writeByte(5)
+      ..writeByte(0)
+      ..write(obj.id)
+      ..writeByte(1)
+      ..write(obj.fullName)
+      ..writeByte(2)
+      ..write(obj.phoneNumber)
+      ..writeByte(3)
+      ..write(obj.image)
+      ..writeByte(4)
+      ..write(obj.token);
+  }
+
+  @override
+  int get hashCode => typeId.hashCode;
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+          other is UserAdapter &&
+              runtimeType == other.runtimeType &&
+              typeId == other.typeId;
+}
+
+
 ///User
 @HiveType(typeId: 0)
 @JsonSerializable(explicitToJson: true)
@@ -12,17 +63,17 @@ class User extends HiveObject{
   @HiveField(1)
   @JsonKey(name: "fullname")
   String? fullName;
-  @HiveField(3)
+  @HiveField(2)
   @JsonKey(name: "phone_number")
   String phoneNumber;
-  @HiveField(4)
+  @HiveField(3)
   @JsonKey(name: "image")
-  String image;
+  String? image;
   @JsonKey(name: "password")
   String? password;
   @JsonKey(name: "password_confirmation")
   String? passwordConfirmation;
-  @HiveField(5)
+  @HiveField(4)
   @JsonKey(name: "token")
    String? token;
 
@@ -41,6 +92,7 @@ class User extends HiveObject{
     required this.phoneNumber,
   });
 }
+
 
 
 ///Vehicle
@@ -97,7 +149,8 @@ class Vehicle {
 class Vehicles {
   List<Vehicle> listVehicle;
 
-  factory Vehicles.fromJson(Map<String, dynamic> json) {
+  factory Vehicles.fromJson( json) {
+
     return _$VehiclesFromJson(json);
   }
   Map<String, dynamic> toJson() => _$VehiclesToJson(this);
@@ -141,7 +194,7 @@ class VehicleType {
 class VehicleTypes {
   List<VehicleType> listVehicleType;
 
-  factory VehicleTypes.fromJson(Map<String, dynamic> json) {
+  factory VehicleTypes.fromJson( json) {
     return _$VehicleTypesFromJson(json);
   }
   Map<String, dynamic> toJson() => _$VehicleTypesToJson(this);

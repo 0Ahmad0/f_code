@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -7,9 +8,14 @@ import 'package:test_futurecode/core/common/helper_widgets/dialog.dart';
 import 'package:test_futurecode/core/utils/app_string.dart';
 import 'package:test_futurecode/core/utils/assets_manager.dart';
 import 'package:test_futurecode/core/utils/color_manager.dart';
+import 'package:test_futurecode/domain/repositories/repository.dart';
+import 'package:test_futurecode/domain/services/api_services_imp.dart';
 import 'package:test_futurecode/screens/auth/signup/signup_screen.dart';
 
 import '../../../core/common/helper_widgets/app_textfiled.dart';
+import '../../../data/datasource/remote/remote_data_source.dart';
+import '../../../domain/services/api_service.dart';
+import 'controller/login_controller.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -19,16 +25,12 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  final phoneController = TextEditingController();
-  final passwordController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
-  RegExp regex =
-      RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$');
+  LoginController loginController = Get.put(LoginController(Repository(RemoteDataSource(ApiServicesImp( Dio())))));
 
   @override
   void dispose() {
-    phoneController.dispose();
-    passwordController.dispose();
+    loginController.dispose();
     super.dispose();
   }
 
@@ -81,7 +83,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         }
                         return null;
                       },
-                      controller: phoneController,
+                      controller: loginController.phoneController,
                       icon: AssetsManager.phoneIcon,
                       hintText: AppString.loginPhone,
                     ),
@@ -93,12 +95,12 @@ class _LoginScreenState extends State<LoginScreen> {
                         if (value!.trim().isEmpty) {
                           return AppString.thisFiledRequired;
                         }
-                        if (!regex.hasMatch(value)) {
-                          return AppString.enterValidPassword;
-                        }
+                        // if (!loginController.regex.hasMatch(value)) {
+                        //   return AppString.enterValidPassword;
+                        // }
                         return null;
                       },
-                      controller: passwordController,
+                      controller: loginController.passwordController,
                       icon: AssetsManager.lockIcon,
                       obscureText: true,
                       hintText: AppString.loginPassword,
@@ -124,7 +126,9 @@ class _LoginScreenState extends State<LoginScreen> {
                     AppButton(
                         text: AppString.loginTitle,
                         onPressed: () {
-                          if (_formKey.currentState!.validate()) {}
+                          if (_formKey.currentState!.validate()) {
+                            loginController.login();
+                          }
                         }),
                     SizedBox(
                       height: 20.sp,

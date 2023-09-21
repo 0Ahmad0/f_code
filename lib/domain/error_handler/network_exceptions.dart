@@ -179,6 +179,7 @@ abstract class NetworkExceptions with _$NetworkExceptions implements Exception {
   }
 
   static String getErrorMessage(NetworkExceptions networkExceptions) {
+
     var errorMessage = "";
     networkExceptions.when(
       notImplemented: () {

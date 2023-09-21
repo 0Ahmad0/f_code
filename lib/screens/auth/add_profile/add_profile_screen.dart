@@ -14,6 +14,7 @@ import 'package:test_futurecode/screens/auth/signup/signup_screen.dart';
 import 'package:test_futurecode/screens/my_vehicles/my_vehicles_screen.dart';
 
 import '../../../core/common/helper_widgets/app_textfiled.dart';
+import '../signup/controller/signup_controller.dart';
 
 class AddProfileScreen extends StatefulWidget {
   const AddProfileScreen({super.key});
@@ -23,19 +24,24 @@ class AddProfileScreen extends StatefulWidget {
 }
 
 class _AddProfileScreenState extends State<AddProfileScreen> {
-  final ImagePicker picker = ImagePicker();
-// Pick an image.
-   XFile? image;
+  SignUpController signUpController = Get.find<SignUpController>();
+
+
 
   _pickFromGallery()async{
-    image = await picker.pickImage(source: ImageSource.gallery).then((value) {
+    await signUpController.picker.pickImage(source: ImageSource.gallery).then((value) {
+      signUpController.image=value;
       Get.back();
     });
-
+    setState(() {
+    });
   }
   _pickFromCamera()async{
-    image = await picker.pickImage(source: ImageSource.camera).then((value) {
+    await signUpController.picker.pickImage(source: ImageSource.camera).then((value) {
+      signUpController.image=value;
       Get.back();
+    });
+    setState(() {
     });
   }
 
@@ -90,7 +96,7 @@ class _AddProfileScreenState extends State<AddProfileScreen> {
                                         color: ColorManager.black.withOpacity(.10),
                                         blurRadius: 22.sp)
                                   ]),
-                              child: image == null? Padding(
+                              child: signUpController.image == null? Padding(
                                 padding: EdgeInsets.all(90.sp),
                                 child: SvgPicture.asset(
                                   AssetsManager.personIcon,
@@ -98,7 +104,7 @@ class _AddProfileScreenState extends State<AddProfileScreen> {
                                 ),
                               ): ClipRRect(
                                 borderRadius: BorderRadius.circular(100.sp),
-                                child: Image.file(File(image!.path)),
+                                child: Image.file(File(signUpController.image!.path)),
                               ),
                             ),
                           ),
@@ -127,7 +133,8 @@ class _AddProfileScreenState extends State<AddProfileScreen> {
               ),
               const Spacer(),
               AppButton(text: AppString.addProfileNext, onPressed: () {
-                Get.to(()=>MyVehiclesScreen());
+                signUpController.singUp();
+
               })
             ],
           ),

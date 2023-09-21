@@ -12,7 +12,7 @@ class AppStorage {
 
   static Future<void> init() async {
     await Hive.initFlutter();
-      //Hive.init(baseBox);
+     // Hive.init(baseBox);
     // register adapters
      Hive.registerAdapter<User>(UserAdapter());
     // open boxes
