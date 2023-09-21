@@ -25,14 +25,18 @@ class RemoteDataSource {
           "password": password,
         },
         hasToken: false);
-    if(response['data']!=null)response['data']=response['data']['user'];
+    if(response['data']!=null){
+      response['data']['user']['token'] = response['data']['token'];
+      response['data']['user']['image'] = '';
+      response['data']=response['data']['user'];
+    }
 
-    User.fromJson(response['data']);
+      User.fromJson(response['data']);
 
-    return BaseModel.fromJson(
-      response,
-      (json) => User.fromJson(json),
-    );
+      return BaseModel.fromJson(
+        response,
+            (json) => User.fromJson(json),
+      );
   }
 
   Future<BaseModel> register(User user) async {

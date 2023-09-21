@@ -42,7 +42,8 @@ class SignUpController extends GetxController {
     response.when(
       success: (data) async {
          user = data.data;
-       // await  AppStorage.setUser(user);
+         Advance advance=Advance(token: user.token);
+         await  AppStorage.setAdvance(advance);
         Get.back();
           Get.offAll(() => MyVehiclesScreen());
       },

@@ -33,7 +33,9 @@ class LoginController extends GetxController {
     response.when(
       success: (data) async {
         User user = data.data;
-       // await  AppStorage.setUser(user);
+        Advance advance=Advance(token: user.token);
+        await  AppStorage.setAdvance(advance);
+
         Get.back();
           Get.offAll(() => MyVehiclesScreen());
       },

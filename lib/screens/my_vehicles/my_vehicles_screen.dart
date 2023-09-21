@@ -53,7 +53,7 @@ class MyVehiclesScreen extends StatelessWidget {
                             itemBuilder: (_, index) {
                               Vehicle vehicle= myVehiclesController.vehicles.value.listVehicle[index];
                               return VehicleItem(
-                                image: AssetsManager.dialogIMG,
+                                image: vehicle.idImage,
                                 name:vehicle.model,
                                 priceKilo: '50 ل.س 1كم/',
                                 priceCompany: '50 ل.س1كم/',
@@ -127,18 +127,18 @@ class VehicleItem extends StatelessWidget {
                 CircleAvatar(
                   backgroundColor: ColorManager.nextIntroButton,
                   radius: 40.sp,
-                  child: SvgPicture.asset(AssetsManager.dialogIMG),
+                  child: SvgPicture.network(AssetsManager.dialogIMG),
                 ),
               ],
             ),
           ),
           ListTile(
 
-            title: Text(name,style:_getStyleColor()),
+            title: Text('سعر الكيلو:',style:_getStyleColor()),
             trailing: Text(priceKilo,style:_getStyleColor()),
           ),
           ListTile(
-            title: Text(name,style:_getStyleColor()),
+            title: Text('نسبة ربح الشركة:',style:_getStyleColor()),
             trailing: Text(priceCompany,style:_getStyleColor()),
           ),
         ],

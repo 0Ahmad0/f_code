@@ -7,10 +7,41 @@ part 'models.g.dart';
 // **************************************************************************
 // TypeAdapterGenerator
 // **************************************************************************
+class AdvanceAdapter extends TypeAdapter<Advance> {
+@override
+final int typeId = 0;
+
+@override
+Advance read(BinaryReader reader) {
+  final numOfFields = reader.readByte();
+  final fields = <int, dynamic>{
+    for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
+  };
+  return Advance()..token = fields[0] as String?;
+}
+
+@override
+void write(BinaryWriter writer, Advance obj) {
+  writer
+    ..writeByte(1)
+    ..writeByte(0)
+    ..write(obj.token);
+}
+
+@override
+int get hashCode => typeId.hashCode;
+
+@override
+bool operator ==(Object other) =>
+identical(this, other) ||
+other is AdvanceAdapter &&
+runtimeType == other.runtimeType &&
+typeId == other.typeId;
+}
 
 class UserAdapter extends TypeAdapter<User> {
   @override
-  final int typeId = 0;
+  final int typeId = 1;
 
   @override
   User read(BinaryReader reader) {
@@ -20,7 +51,7 @@ class UserAdapter extends TypeAdapter<User> {
     };
     return User(
       phoneNumber: fields[2] as String,
-      image: fields[3] as String,
+      image: fields[3] as String?,
       id: fields[0] as int,
       fullName: fields[1] as String,
     )..token = fields[4] as String?;
@@ -54,8 +85,17 @@ class UserAdapter extends TypeAdapter<User> {
 }
 
 
-///User
+
+///advance
 @HiveType(typeId: 0)
+class Advance extends HiveObject {
+  Advance({String? token});
+  @HiveField(0)
+  String? token;
+}
+
+///User
+@HiveType(typeId: 1)
 @JsonSerializable(explicitToJson: true)
 class User extends HiveObject{
   @HiveField(0)

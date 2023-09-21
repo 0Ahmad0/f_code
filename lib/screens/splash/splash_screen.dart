@@ -3,6 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:test_futurecode/core/utils/app_constant.dart';
 import 'package:test_futurecode/screens/intro/intro_screen.dart';
+import 'package:test_futurecode/screens/splash/controller/splash_controller.dart';
 import '/core/utils/assets_manager.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -13,9 +14,10 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
+  SplashController splashController = Get.put(SplashController());
   void _goNextPage(){
     Future.delayed(Duration(seconds: AppConstants.splashDelay),(){
-      Get.off(()=>const IntroScreen());
+      splashController.initSplash();
     });
   }
   @override
