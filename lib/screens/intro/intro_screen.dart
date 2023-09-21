@@ -46,64 +46,64 @@ class _IntroScreenState extends State<IntroScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: Stack(
-          children: [
-            Column(
+        child: StatefulBuilder(
+          builder: (context,pageViewState) {
+            return Stack(
               children: [
-                Expanded(
-                  child: StatefulBuilder(
-                      builder: (context, pageViewState) {
-                        return PageView(
-                          onPageChanged: (index) {
-                            pageViewState(() {
-                              _currentPage = index;
-                            });
-                          },
-                          controller: _pageController,
-                          children: [
-                            IntroPage1(),
-                            IntroPage2(),
-                            IntroPage3(),
-                          ],
-                        );
-                      }
-                  ),
-                ),
-                Padding(
-                  padding: EdgeInsets.all(20.sp),
-                  child: _customProgress(),
-                ),
-
-              ],
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Visibility(
-                  visible: _currentPage != 0,
-                  child: InkWell(
-                    onTap: () {
-                      _pageController.previousPage(
-                          duration: const Duration(milliseconds: 300),
-                          curve: Curves.easeInOut);
-                    },
-                    child: AppBackButton(),
-                  ),
-                ),
-                TextButton(
-                  onPressed: () {
-                    Get.off(() => LoginScreen());
-                  },
-                  child: const Text(
-                    AppString.skip,
-                    style: TextStyle(
-                        color: ColorManager.black
+                Column(
+                  children: [
+                    Expanded(
+                      child: PageView(
+                        onPageChanged: (index) {
+                          pageViewState(() {
+                            _currentPage = index;
+                          });
+                        },
+                        controller: _pageController,
+                        children: [
+                          IntroPage1(),
+                          IntroPage2(),
+                          IntroPage3(),
+                        ],
+                      ),
                     ),
-                  ),
+                    Padding(
+                      padding: EdgeInsets.all(20.sp),
+                      child: _customProgress(),
+                    ),
+
+                  ],
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Visibility(
+                      visible: _currentPage != 0,
+                      child: InkWell(
+                        onTap: () {
+                          _pageController.previousPage(
+                              duration: const Duration(milliseconds: 300),
+                              curve: Curves.easeInOut);
+                        },
+                        child: AppBackButton(),
+                      ),
+                    ),
+                    TextButton(
+                      onPressed: () {
+                        Get.off(() => LoginScreen());
+                      },
+                      child: const Text(
+                        AppString.skip,
+                        style: TextStyle(
+                            color: ColorManager.black
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ],
-            ),
-          ],
+            );
+          }
         ),
       ),
     );

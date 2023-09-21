@@ -26,23 +26,24 @@ class AddProfileScreen extends StatefulWidget {
 class _AddProfileScreenState extends State<AddProfileScreen> {
   SignUpController signUpController = Get.find<SignUpController>();
 
-
-
-  _pickFromGallery()async{
-    await signUpController.picker.pickImage(source: ImageSource.gallery).then((value) {
-      signUpController.image=value;
+  _pickFromGallery() async {
+    await signUpController.picker
+        .pickImage(source: ImageSource.gallery)
+        .then((value) {
+      signUpController.image = value;
       Get.back();
     });
-    setState(() {
-    });
+    setState(() {});
   }
-  _pickFromCamera()async{
-    await signUpController.picker.pickImage(source: ImageSource.camera).then((value) {
-      signUpController.image=value;
+
+  _pickFromCamera() async {
+    await signUpController.picker
+        .pickImage(source: ImageSource.camera)
+        .then((value) {
+      signUpController.image = value;
       Get.back();
     });
-    setState(() {
-    });
+    setState(() {});
   }
 
   @override
@@ -76,66 +77,70 @@ class _AddProfileScreenState extends State<AddProfileScreen> {
                 AppString.addProfilePhotoClean,
                 style: TextStyle(fontSize: 15.sp, fontWeight: FontWeight.w500),
               ),
-              StatefulBuilder(
-                builder: (context,pickImageSate) {
-                  return Stack(
-                    children: [
-                           GestureDetector(
-                            onTap: (){
-                              buildShowImagePicker(context, pickImageSate);
-                            },
-                            child: Container(
-                              margin: EdgeInsets.all(12.sp),
-                              width: Get.width,
-                              height: Get.width,
-                              decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  color: ColorManager.white,
-                                  boxShadow: [
-                                    BoxShadow(
-                                        color: ColorManager.black.withOpacity(.10),
-                                        blurRadius: 22.sp)
-                                  ]),
-                              child: signUpController.image == null? Padding(
+              StatefulBuilder(builder: (context, pickImageSate) {
+                return Stack(
+                  children: [
+                    GestureDetector(
+                      onTap: () {
+                        buildShowImagePicker(context, pickImageSate);
+                      },
+                      child: Container(
+                        margin: EdgeInsets.all(12.sp),
+                        width: Get.width,
+                        height: Get.width,
+                        decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: ColorManager.white,
+                            boxShadow: [
+                              BoxShadow(
+                                  color: ColorManager.black.withOpacity(.10),
+                                  blurRadius: 22.sp)
+                            ]),
+                        child: signUpController.image == null
+                            ? Padding(
                                 padding: EdgeInsets.all(90.sp),
                                 child: SvgPicture.asset(
                                   AssetsManager.personIcon,
                                   color: ColorManager.nextIntroButton,
                                 ),
-                              ): ClipRRect(
-                                borderRadius: BorderRadius.circular(100.sp),
-                                child: Image.file(File(signUpController.image!.path)),
-                              ),
-                            ),
-                          ),
-
-                      Positioned(
-                        bottom: Get.width / 6,
-                        right: Get.width / 8,
-                        child: InkWell(
-                          onTap: () {
-                            buildShowImagePicker(context, pickImageSate);
-                          },
-                          child: CircleAvatar(
-                            radius: 26.sp,
-                            backgroundColor: ColorManager.primaryColor,
-                            child: Icon(
-                              Icons.add,
-                              color: ColorManager.white,
-                              size: 30.sp,
-                            ),
+                              )
+                            : ClipOval(
+                                    child: Image.file(
+                                      File(
+                                        signUpController.image!.path,
+                                      ),
+                                      fit: BoxFit.cover,
+                                    ),
+                                  ),
+                      ),
+                    ),
+                    Positioned(
+                      bottom: Get.width / 6,
+                      right: Get.width / 8,
+                      child: InkWell(
+                        onTap: () {
+                          buildShowImagePicker(context, pickImageSate);
+                        },
+                        child: CircleAvatar(
+                          radius: 26.sp,
+                          backgroundColor: ColorManager.primaryColor,
+                          child: Icon(
+                            Icons.add,
+                            color: ColorManager.white,
+                            size: 30.sp,
                           ),
                         ),
-                      )
-                    ],
-                  );
-                }
-              ),
+                      ),
+                    )
+                  ],
+                );
+              }),
               const Spacer(),
-              AppButton(text: AppString.addProfileNext, onPressed: () {
-                signUpController.singUp();
-
-              })
+              AppButton(
+                  text: AppString.addProfileNext,
+                  onPressed: () {
+                    signUpController.singUp();
+                  })
             ],
           ),
         ),
@@ -143,30 +148,32 @@ class _AddProfileScreenState extends State<AddProfileScreen> {
     );
   }
 
-  Future<dynamic> buildShowImagePicker(BuildContext context, StateSetter pickImageSate) {
-    return showModalBottomSheet(context: context, builder: (_)=>Column(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            ListTile(
-                              onTap: (){
-                                pickImageSate((){
-                                  _pickFromGallery();
-                                });
-                              },
-                              leading: Icon(Icons.image),
-                              title: Text(AppString.addProfilePickFromGallery),
-                            ),
-                            ListTile(
-                              onTap: (){
-                                pickImageSate((){
-                                  _pickFromCamera();
-                                });
-                              },
-                              leading: Icon(Icons.camera_alt),
-                              title: Text(AppString.addProfilePickFromCamera),
-                            ),
-                          ],
-                        )
-                        );
+  Future<dynamic> buildShowImagePicker(
+      BuildContext context, StateSetter pickImageSate) {
+    return showModalBottomSheet(
+        context: context,
+        builder: (_) => Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                ListTile(
+                  onTap: () {
+                    pickImageSate(() {
+                      _pickFromGallery();
+                    });
+                  },
+                  leading: Icon(Icons.image),
+                  title: Text(AppString.addProfilePickFromGallery),
+                ),
+                ListTile(
+                  onTap: () {
+                    pickImageSate(() {
+                      _pickFromCamera();
+                    });
+                  },
+                  leading: Icon(Icons.camera_alt),
+                  title: Text(AppString.addProfilePickFromCamera),
+                ),
+              ],
+            ));
   }
 }
