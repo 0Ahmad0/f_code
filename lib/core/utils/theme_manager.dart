@@ -30,11 +30,7 @@ class ThemeManager {
       appBarTheme: AppBarTheme(
         backgroundColor: ColorManager.white,
         centerTitle: true,
-        elevation: 1.0,
-        iconTheme: const IconThemeData(
-          color: ColorManager.primaryColor
-        ),
-        titleTextStyle: TextStyle(color: ColorManager.black, fontSize: 14.sp),
+       elevation: 0.0
       ),
       scaffoldBackgroundColor: ColorManager.white);
 }

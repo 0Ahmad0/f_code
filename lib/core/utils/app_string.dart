@@ -10,4 +10,35 @@ class AppString {
   static const goNow = 'يلا نبلش';
   static const okay = 'موافق';
   static const dialogText = 'طلبك قيد المراجعة سيتم اعلامك بالنتيجة';
+  //Login
+  static const loginTitle = 'تسجيل الدخول';
+  static const loginPhone = 'رقم الهاتف';
+  static const loginPassword = 'كلمة السر';
+  static const loginForgetPassword = 'هل نسيت كلمة السر؟';
+  static const loginDoNotHaveAccount = 'ليس لديك حساب؟  ';
+  static const loginCreateAccount = 'إنشاء حساب';
+  static const thisFiledRequired = 'هذا الحقل مطلوب!';
+  static const enterValidPhone = 'أدخل رقم موبايل صالح';
+  static const enterValidPassword = 'أدخل كلمة مرور قوية';
+  //SignUp
+  static const signupTitle = 'إنشاء حساب';
+  static const signupName = 'الاسم';
+  static const signupPhone = 'رقم الهاتف';
+  static const signupPassword = 'كلمة السر';
+  static const signupConfirmPassword = 'تأكيد كلمة السر';
+  static const signupHaveAccount = 'لديك حساب؟ ';
+  static const signupLogin = ' تسحيل الدخول';
+  static const signupAgreeWithUs = 'متابعتك تعني موافقتك على ';
+  static const signupPrivacyAndCondition = ' الشروط والأحكام وسياسة الخصوصية';
+  //Profile
+  static const addProfilePhoto = 'أضف صورتك الشخصية';
+  static const addProfilePhotoClean = 'اجعل صورتك واضحة ';
+  static const addProfileNext = 'التالي';
+  static const addProfilePickFromGallery = 'الاختيار من المعرض';
+  static const addProfilePickFromCamera = 'الاختيار من الكاميرا';
+  //MyVehicles
+  static const myVehicles = 'مركباتي';
+  static const myVehiclesAddVehicle = 'إضافة المركبة';
+
+
 }

@@ -24,7 +24,7 @@ class IntroPage2 extends StatelessWidget {
         Padding(
           padding:  EdgeInsets.all(36.sp),
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.end,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               SizedBox(height: Get.height / 2.25,),
               SvgPicture.asset(AssetsManager.introTitle2IMG),

@@ -39,6 +39,7 @@ dependencies:
   dio:
   flutter_svg:
   flutter_screenutil:
+  image_picker:
 
 dev_dependencies:
   flutter_test:

@@ -21,6 +21,7 @@ class MyApp extends StatelessWidget {
     splitScreenMode: true,
     builder: (_,__){
         return GetMaterialApp(
+          locale: Locale('ar'),
           debugShowCheckedModeBanner: false,
           title: 'Flutter Demo',
           theme: ThemeManager.myTheme,

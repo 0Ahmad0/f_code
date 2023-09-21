@@ -23,7 +23,7 @@ class IntroPage3 extends StatelessWidget {
         Padding(
           padding:  EdgeInsets.all(36.sp),
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.end,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               SizedBox(height: 100.h,),
               SvgPicture.asset(AssetsManager.introTitle3IMG),
