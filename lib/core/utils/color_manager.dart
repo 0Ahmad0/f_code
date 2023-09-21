@@ -10,6 +10,7 @@ class ColorManager{
  static const success = Color(0xff09DA3B);
  static const grey = Colors.grey;
  static const nextIntroButton = Color(0xffF0F0F0);
+ static const ligthGrey = Color(0xff747474);
 
 
 

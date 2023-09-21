@@ -39,6 +39,26 @@ class AppString {
   //MyVehicles
   static const myVehicles = 'مركباتي';
   static const myVehiclesAddVehicle = 'إضافة المركبة';
+  //Add Vehicles
+  static const addVehicle = 'إضافة مركبة';
+  static const typeVehicle = 'نوع المركبة';
+  static const modelVehicle = 'الموديل:';
+  static const colorVehicle = 'لون المركبة';
+  static const numberVehicle = 'رقم اللوحة';
+  static const imagesVehicle = 'صور المركبة';
+  static const detailsImagesVehicle =[
+    'صورة الميكانيك',
+    'صورة المركبة',
+    'صورة اللوحة',
+    'الهوية الشخصية',
+    'الوكالة أو التفويض',
+  ];
+  //vehicleDetails
+  static const vehicleDetails = 'معلومات المركبة';
+  static const pickerVehicle = 'إختيار المركبة';
+  static const priceKilo = 'سعر الكيلو';
+  static const priceCompany = 'نسبة ريج الشركة';
+
 
 
 }

@@ -15,6 +15,13 @@ class AssetsManager{
   static const personIcon = '$imagePath/person_icon.svg';
   static const phoneIcon = '$imagePath/phone_icon.svg';
   static const lockIcon = '$imagePath/lock_icon.svg';
+  static const typeCarIcon = '$imagePath/type_car.svg';
+  static const modelCarIcon = '$imagePath/car_model.svg';
+  static const plateNumberCarIcon = '$imagePath/plate_number.svg';
+  static const colorPaletteCarIcon = '$imagePath/color_palette.svg';
+  static const priceKiloIcon = '$imagePath/price_kilo.svg';
+  static const priceCompanyCarIcon = '$imagePath/price_company.svg';
+
 
 
 
