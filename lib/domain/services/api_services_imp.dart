@@ -25,8 +25,8 @@ class ApiServicesImp implements ApiServices {
     _headers = await {
       "Accept": "application/json",
       "Authorization":
-          //hasToken ? "Bearer ${(await AppStorage.getUser())?.token}" : null,
-          hasToken ? "Bearer 51|zXyhRMOzh1njBLibX1S6ioSD5CwUkQULzZSezNLj8b6db361" : null,
+          hasToken ? "Bearer ${(await AppStorage.getAdvance())?.token}" : null,
+         // hasToken ? "Bearer 51|zXyhRMOzh1njBLibX1S6ioSD5CwUkQULzZSezNLj8b6db361" : null,
     };
   }
 
