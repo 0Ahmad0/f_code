@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -9,9 +10,13 @@ import 'package:test_futurecode/core/utils/assets_manager.dart';
 import 'package:test_futurecode/core/utils/color_manager.dart';
 import 'package:test_futurecode/screens/auth/add_profile/add_profile_screen.dart';
 import 'package:test_futurecode/screens/auth/login/login_screen.dart';
+import 'package:test_futurecode/screens/auth/signup/controller/signup_controller.dart';
 import 'package:test_futurecode/screens/auth/signup/signup_screen.dart';
 
 import '../../../core/common/helper_widgets/app_textfiled.dart';
+import '../../../data/datasource/remote/remote_data_source.dart';
+import '../../../domain/repositories/repository.dart';
+import '../../../domain/services/api_services_imp.dart';
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({super.key});
@@ -21,20 +26,15 @@ class SignUpScreen extends StatefulWidget {
 }
 
 class _SignUpScreenState extends State<SignUpScreen> {
-  final nameController = TextEditingController();
-  final phoneController = TextEditingController();
-  final passwordController = TextEditingController();
-  final confirmPasswordController = TextEditingController();
-  final _formKey = GlobalKey<FormState>();
-  RegExp regex =
-      RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$');
+ final _formKey = GlobalKey<FormState>();
+ SignUpController signUpController = Get.put(SignUpController(Repository(RemoteDataSource(ApiServicesImp( Dio())))));
 
   @override
   void dispose() {
-    nameController.dispose();
-    phoneController.dispose();
-    passwordController.dispose();
-    confirmPasswordController.dispose();
+    signUpController.nameController.dispose();
+    signUpController.phoneController.dispose();
+    signUpController.passwordController.dispose();
+    signUpController.confirmPasswordController.dispose();
     super.dispose();
   }
 
@@ -78,7 +78,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       height: 40.sp,
                     ),
                     AppTextFiled(
-                      controller: nameController,
+                      controller: signUpController.nameController,
                       icon: AssetsManager.personIcon,
                       hintText: AppString.signupName,
                     ),
@@ -95,7 +95,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         }
                         return null;
                       },
-                      controller: phoneController,
+                      controller: signUpController.phoneController,
                       icon: AssetsManager.phoneIcon,
                       hintText: AppString.loginPhone,
                     ),
@@ -107,12 +107,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         if (value!.trim().isEmpty) {
                           return AppString.thisFiledRequired;
                         }
-                        if (!regex.hasMatch(value)) {
-                          return AppString.enterValidPassword;
-                        }
+                        // if (!signUpController.regex.hasMatch(value)) {
+                        //   return AppString.enterValidPassword;
+                        // }
                         return null;
                       },
-                      controller: passwordController,
+                      controller: signUpController.passwordController,
                       icon: AssetsManager.lockIcon,
                       obscureText: true,
                       hintText: AppString.signupPassword,
@@ -125,14 +125,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         if (value!.trim().isEmpty) {
                           return AppString.thisFiledRequired;
                         }
-                        if (confirmPasswordController.text
-                                .compareTo(passwordController.text) !=
+                        if (signUpController.confirmPasswordController.text
+                                .compareTo(signUpController.passwordController.text) !=
                             0) {
                           return AppString.enterValidPassword;
                         }
                         return null;
                       },
-                      controller: confirmPasswordController,
+                      controller: signUpController.confirmPasswordController,
                       icon: AssetsManager.lockIcon,
                       obscureText: true,
                       hintText: AppString.signupConfirmPassword,
@@ -144,7 +144,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         text: AppString.signupTitle,
                         onPressed: () {
                           if (_formKey.currentState!.validate()) {
-                            Get.off(() => const AddProfileScreen());
+                            Get.to(() => const AddProfileScreen());
                           }
                         }),
                     SizedBox(
