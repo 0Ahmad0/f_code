@@ -40,6 +40,8 @@ dependencies:
   flutter_svg:
   flutter_screenutil:
   image_picker:
+  dotted_border:
+  file_picker:
 
 dev_dependencies:
   flutter_test:
