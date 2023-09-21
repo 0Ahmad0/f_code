@@ -230,6 +230,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.0.3"
+  flutter_plugin_android_lifecycle:
+    dependency: transitive
+    description:
+      name: flutter_plugin_android_lifecycle
+      sha256: f185ac890306b5779ecbd611f52502d8d4d63d27703ef73161ca0407e815f02c
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.0.16"
   flutter_screenutil:
     dependency: "direct main"
     description:
@@ -323,38 +331,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "4.0.2"
-  io:
-    dependency: transitive
-    description:
-      name: io
-      sha256: "2ec25704aba361659e10e3e5f5d672068d332fc8ac516421d483a11e5cbd061e"
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.0.4"
-  js:
-    dependency: transitive
-    description:
-      name: js
-      sha256: f2c445dce49627136094980615a031419f7f3eb393237e4ecd97ac15dea343f3
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.6.7"
-  json_annotation:
-    dependency: transitive
-    description:
-      name: json_annotation
-      sha256: b10a7b2ff83d83c777edba3c6a0f97045ddadd56c944e1a23a3fdf43a1bf4467
-      url: "https://pub.dev"
-    source: hosted
-    version: "4.8.1"
-  json_serializable:
-    dependency: "direct main"
-    description:
-      name: json_serializable
-      sha256: aa1f5a8912615733e0fdc7a02af03308933c93235bdc8d50d0b0c8a8ccb0b969
-      url: "https://pub.dev"
-    source: hosted
-    version: "6.7.1"
   lints:
     dependency: transitive
     description:
@@ -483,14 +459,7 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "5.4.0"
-  platform:
-    dependency: transitive
-    description:
-      name: platform
-      sha256: ae68c7bfcd7383af3629daafb32fb4e8681c7154428da4febcff06200585f102
-      url: "https://pub.dev"
-    source: hosted
-    version: "3.1.2"
+
   plugin_platform_interface:
     dependency: transitive
     description:

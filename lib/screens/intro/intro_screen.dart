@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:test_futurecode/core/common/helper_widgets/app_back_button.dart';
 import 'package:test_futurecode/core/utils/app_string.dart';
 import 'package:test_futurecode/core/utils/assets_manager.dart';
 import 'package:test_futurecode/core/utils/color_manager.dart';
@@ -78,6 +79,17 @@ class _IntroScreenState extends State<IntroScreen> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
+                Visibility(
+                  visible: _currentPage != 0,
+                  child: InkWell(
+                    onTap: () {
+                      _pageController.previousPage(
+                          duration: const Duration(milliseconds: 300),
+                          curve: Curves.easeInOut);
+                    },
+                    child: AppBackButton(),
+                  ),
+                ),
                 TextButton(
                   onPressed: () {
                     Get.off(() => LoginScreen());
@@ -89,33 +101,6 @@ class _IntroScreenState extends State<IntroScreen> {
                     ),
                   ),
                 ),
-                Visibility(
-                  visible: _currentPage != 0,
-                  child: InkWell(
-                    onTap: () {
-                      _pageController.previousPage(
-                          duration: const Duration(milliseconds: 300),
-                          curve: Curves.easeInOut);
-                    },
-                    child: Container(
-                      margin: EdgeInsets.all(10.sp),
-                      padding: EdgeInsets.all(8.sp),
-                      decoration: BoxDecoration(
-                          color: ColorManager.white,
-                          shape: BoxShape.circle,
-                          boxShadow: [
-                            BoxShadow(
-                                color: ColorManager.black.withOpacity(.13),
-                                blurRadius: 20.0
-                            )
-                          ]
-                      ),
-                      child: Icon(Icons.arrow_forward_ios,
-                        size: 16.sp,
-                        color: ColorManager.black,),
-                    ),
-                  ),
-                )
               ],
             ),
           ],

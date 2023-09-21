@@ -10,6 +10,11 @@ class AssetsManager{
   static const introTitle2IMG = '$imagePath/intro_title2.svg';
   static const introTitle3IMG = '$imagePath/intro_title3.svg';
   static const dialogIMG = '$imagePath/dialog.svg';
+  static const backOpacityIMG = '$imagePath/back_opacity.png';
+  ///Icons
+  static const personIcon = '$imagePath/person_icon.svg';
+  static const phoneIcon = '$imagePath/phone_icon.svg';
+  static const lockIcon = '$imagePath/lock_icon.svg';
 
 
 
