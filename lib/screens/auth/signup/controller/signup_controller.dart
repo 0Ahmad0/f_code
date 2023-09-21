@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:test_futurecode/core/common/helper_widgets/dialog.dart';
 import 'package:test_futurecode/core/config/storage/app_storage.dart';
+import 'package:test_futurecode/screens/auth/login/login_screen.dart';
 
 import '../../../../data/models/models.dart';
 import '../../../../domain/error_handler/network_exceptions.dart';
@@ -42,10 +43,9 @@ class SignUpController extends GetxController {
     response.when(
       success: (data) async {
          user = data.data;
-         Advance advance=Advance(token: user.token);
-         await  AppStorage.setAdvance(advance);
+
         Get.back();
-          Get.offAll(() => MyVehiclesScreen());
+          Get.offAll(() => LoginScreen());
       },
       failure: ( networkException) {
         Get.back();

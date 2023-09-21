@@ -27,7 +27,6 @@ class RemoteDataSource {
         hasToken: false);
     if(response['data']!=null){
       response['data']['user']['token'] = response['data']['token'];
-      response['data']['user']['image'] = '';
       response['data']=response['data']['user'];
     }
 

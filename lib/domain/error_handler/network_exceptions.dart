@@ -254,6 +254,15 @@ abstract class NetworkExceptions with _$NetworkExceptions implements Exception {
     );
     return errorMessage;
   }
+  static bool checkUnauthorized(NetworkExceptions networkExceptions){
+    bool check = false;
+    networkExceptions.whenOrNull(
+      unauthorizedRequest: (String error) {
+      check = true;
+      }
+    );
+    return check;
+  }
 
 
 }

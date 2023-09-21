@@ -43,9 +43,12 @@ class MyVehiclesScreen extends StatelessWidget {
                Column(
 
                 children: [
-                  Obx(() {
-                    if (myVehiclesController.isLoading.value) {
-                      return Expanded(child: Center(child: CircularProgressIndicator())); // عرض حلقة التحميل
+                  GetBuilder<MyVehiclesController>(
+                      init: myVehiclesController,
+                      builder: (controller)=>
+    Obx(() {
+                    if (controller.isLoading.value) {
+                      return Expanded(child: Center(child: CircularProgressIndicator()));
                     }
                     else {
                       return Expanded(
@@ -53,7 +56,7 @@ class MyVehiclesScreen extends StatelessWidget {
                             separatorBuilder: (_,__)=>SizedBox(height: 30.sp,),
                             padding: EdgeInsets.all(40.sp),
                             itemBuilder: (_, index) {
-                              Vehicle vehicle= myVehiclesController.vehicles.value.listVehicle[index];
+                              Vehicle vehicle= controller.vehicles.value.listVehicle[index];
                               return
 
                                 VehicleItem(
@@ -65,9 +68,9 @@ class MyVehiclesScreen extends StatelessWidget {
                               );
 
                               },
-                            itemCount: myVehiclesController.vehicles.value.listVehicle.length,)
+                            itemCount: controller.vehicles.value.listVehicle.length,)
                       );}
-                  }),
+                  })),
                   Padding(
                     padding: EdgeInsets.all(12.sp),
                     child: AppButton(text: AppString.myVehiclesAddVehicle, onPressed: () {
@@ -119,7 +122,7 @@ class VehicleItem extends StatelessWidget {
         },
         child: Container(
         padding: EdgeInsets.all(16.sp),
-        decoration: BoxDecoration(
+        decoration:   BoxDecoration(
           //Todo Add on select Index
           border:  myVehiclesController.clickIndex.value==index?Border.all(
             color: ColorManager.primaryColor,

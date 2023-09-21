@@ -8,6 +8,7 @@ import 'package:test_futurecode/core/common/helper_widgets/dialog.dart';
 import 'package:test_futurecode/core/config/storage/app_storage.dart';
 import 'package:test_futurecode/core/utils/color_manager.dart';
 import 'package:test_futurecode/core/utils/theme_manager.dart';
+import 'package:test_futurecode/screens/auth/login/login_screen.dart';
 
 import '../../../../data/models/models.dart';
 import '../../../../domain/error_handler/network_exceptions.dart';
@@ -65,6 +66,7 @@ class AddVehicleController extends GetxController {
       },
       failure: ( networkException) {
         Get.back();
+
         Get.snackbar( 'حدث خطأ!',NetworkExceptions.getErrorMessage(networkException));
 
       },

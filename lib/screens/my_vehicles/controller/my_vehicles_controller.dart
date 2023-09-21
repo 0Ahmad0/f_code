@@ -8,6 +8,7 @@ import 'package:test_futurecode/core/config/storage/app_storage.dart';
 import '../../../../data/models/models.dart';
 import '../../../../domain/error_handler/network_exceptions.dart';
 import '../../../../domain/repositories/repository.dart';
+import '../../auth/login/login_screen.dart';
 
 class MyVehiclesController extends GetxController {
   MyVehiclesController(this._repository);
@@ -34,6 +35,10 @@ class MyVehiclesController extends GetxController {
       },
       failure: ( networkException) {
         isLoading.value=false;
+        if(NetworkExceptions.checkUnauthorized(networkException)){
+          AppStorage.depose();
+          Get.offAll(LoginScreen());
+        }
         Get.snackbar( 'حدث خطأ!',NetworkExceptions.getErrorMessage(networkException));
 
       },
