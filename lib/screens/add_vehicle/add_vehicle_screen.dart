@@ -267,7 +267,9 @@ class _AddVehicleScreenState extends State<AddVehicleScreen> {
               child: AppButton(
                   text: AppString.myVehiclesAddVehicle,
                   onPressed: () {
-                    if (_formKey.currentState!.validate()) {}
+                    if (_formKey.currentState!.validate()) {
+                      addVehicleController.addVehicle();
+                    }
                   }),
             )
           ],
